@@ -22,13 +22,13 @@ RUN npm run build
 RUN npm prune --production
 RUN apk del make gcc g++ python && \
     rm -rf /var/cache/apk/*
-RUN rm -rf /code/build-params /code/tsconfig.json
+RUN rm -rf /code/dockerfiles /code/tsconfig.json
 
 # Create dedicated user to not run the application as root (security best practice)
-RUN adduser -D -h /code -u 5000 ssense && \
-    chown -R ssense:ssense /code
+RUN adduser -D -h /code -u 5000 myuser && \
+    chown -R myuser:myuser /code
 
-USER ssense
+USER myuser
 
 # Expose application port
 EXPOSE 8080

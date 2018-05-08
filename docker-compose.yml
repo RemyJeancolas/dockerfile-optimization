@@ -4,7 +4,7 @@ services:
   docker-optimization:
     build:
       context: .
-      dockerfile: ./build-params/v5/Dockerfile
+      dockerfile: ./dockerfiles/v5/Dockerfile
       target: develop
     command: npm run dev
     volumes:

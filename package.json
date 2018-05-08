@@ -1,15 +1,15 @@
 {
   "name": "docker-optimization",
   "version": "1.0.0",
-  "description": "Example project showing how to optimize Dockerfile to reduce the final docker image size",
+  "description": "Example project showing how to optimize your Dockerfile to reduce your final docker image size",
   "main": "build/index.js",
   "private": true,
   "scripts": {
-    "build:docker:v1": "/usr/bin/time --format='----- Build duration: %e seconds -----' docker build --no-cache --force-rm --tag docker-optimization-v1 --file ./build-params/v1/Dockerfile .",
-    "build:docker:v2": "/usr/bin/time --format='----- Build duration: %e seconds -----' docker build --no-cache --force-rm --tag docker-optimization-v2 --file ./build-params/v2/Dockerfile .",
-    "build:docker:v3": "/usr/bin/time --format='----- Build duration: %e seconds -----' docker build --no-cache --force-rm --tag docker-optimization-v3 --file ./build-params/v3/Dockerfile .",
-    "build:docker:v4": "/usr/bin/time --format='----- Build duration: %e seconds -----' docker build --no-cache --force-rm --tag docker-optimization-v4 --file ./build-params/v4/Dockerfile .",
-    "build:docker:v5": "/usr/bin/time --format='----- Build duration: %e seconds -----' docker build --no-cache --force-rm --tag docker-optimization-v5 --file ./build-params/v5/Dockerfile .",
+    "build:docker:v1": "/usr/bin/time --format='----- Build duration: %e seconds -----' docker build --no-cache --force-rm --tag docker-optimization-v1 --file ./dockerfiles/v1/Dockerfile .",
+    "build:docker:v2": "/usr/bin/time --format='----- Build duration: %e seconds -----' docker build --no-cache --force-rm --tag docker-optimization-v2 --file ./dockerfiles/v2/Dockerfile .",
+    "build:docker:v3": "/usr/bin/time --format='----- Build duration: %e seconds -----' docker build --no-cache --force-rm --tag docker-optimization-v3 --file ./dockerfiles/v3/Dockerfile .",
+    "build:docker:v4": "/usr/bin/time --format='----- Build duration: %e seconds -----' docker build --no-cache --force-rm --tag docker-optimization-v4 --file ./dockerfiles/v4/Dockerfile .",
+    "build:docker:v5": "/usr/bin/time --format='----- Build duration: %e seconds -----' docker build --no-cache --force-rm --tag docker-optimization-v5 --file ./dockerfiles/v5/Dockerfile .",
     "build:docker:all": "npm run build:docker:v1 && npm run build:docker:v2 && npm run build:docker:v3 && npm run build:docker:v4 && npm run build:docker:v5",
     "docker:v1": "docker run -i -t -p=8080:8080 --rm --name docker-optimization-v1 docker-optimization-v1",
     "docker:v2": "docker run -i -t -p=8080:8080 --rm --name docker-optimization-v2 docker-optimization-v2",
@@ -28,7 +28,14 @@
     "name": "Rémy Jeancolas",
     "email": "remy.jeancolas@illogeek.eu"
   },
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RemyJeancolas/dockerfile-optimization"
+  },
+  "bugs": {
+    "url": "https://github.com/RemyJeancolas/dockerfile-optimization/issues"
+  },
   "dependencies": {
     "newrelic": "^4.1.0",
     "restify": "^7.1.1"

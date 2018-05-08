@@ -24,7 +24,7 @@ describe('App', () => {
             it('should init a restify server, add a middleware to log requests and one default route', () => {
                 const clock = sandbox.useFakeTimers(Date.now());
                 const createServerStub = sandbox.stub(restify, 'createServer').returns(server);
-                const logStub = sandbox.stub(console, 'log');
+                const logSpy = sandbox.spy(console, 'log');
                 const next: any = sandbox.stub();
                 const useStub = sandbox.stub(server, 'use').callsFake((cb: Function) => {
                     cb(req, null, next);
@@ -43,7 +43,7 @@ describe('App', () => {
                 expect(useStub.calledOnce).to.be.true;
                 expect(getStub.calledOnce).to.be.true;
                 expect(onStub.calledOnce).to.be.true;
-                expect(logStub.calledOnceWithExactly(`${req.method} ${req.url} - ${res.statusCode} - 5ms`)).to.be.true;
+                expect(logSpy.calledOnceWithExactly(`${req.method} ${req.url} - ${res.statusCode} - 5ms`)).to.be.true;
                 expect(sendStub.calledOnceWithExactly('Hello world !')).to.be.true;
                 expect(next.calledTwice).to.be.true;
             });
@@ -51,7 +51,7 @@ describe('App', () => {
             it('should log a duration of 0ms if req._start is not set', () => {
                 const clock = sandbox.useFakeTimers(Date.now());
                 const createServerStub = sandbox.stub(restify, 'createServer').returns(server);
-                const logStub = sandbox.stub(console, 'log');
+                const logSpy = sandbox.spy(console, 'log');
                 sandbox.stub(server, 'use');
                 sandbox.stub(server, 'get');
                 const onStub = sandbox.stub(server, 'on').callsFake((event: string, cb: Function) => {
@@ -62,7 +62,7 @@ describe('App', () => {
                 new App();
                 expect(createServerStub.calledOnceWithExactly()).to.be.true;
                 expect(onStub.calledOnce).to.be.true;
-                expect(logStub.calledOnceWithExactly(`${req.method} ${req.url} - ${res.statusCode} - 0ms`)).to.be.true;
+                expect(logSpy.calledOnceWithExactly(`${req.method} ${req.url} - ${res.statusCode} - 0ms`)).to.be.true;
             });
         });
     });
@@ -76,12 +76,12 @@ describe('App', () => {
             const listenStub = sandbox.stub(server, 'listen').callsFake((port: number, cb: Function) => {
                 cb();
             });
-            const logStub = sandbox.stub(console, 'log');
+            const logSpy = sandbox.spy(console, 'log');
 
             const app = new App();
             app.start(8080);
             expect(listenStub.calledOnceWith(8080)).to.be.true;
-            expect(logStub.calledOnceWithExactly('Server started on port 8080')).to.be.true;
+            expect(logSpy.calledOnceWithExactly('Server started on port 8080')).to.be.true;
         });
     });
 });

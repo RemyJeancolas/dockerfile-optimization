@@ -8,24 +8,36 @@ FROM alpine:3.7 as base
 # Create and define work directory
 WORKDIR /code
 
-# Copy only the minimal required files
-COPY package.json package-lock.json /code/
-
-# Update system, install dependencies, install npm production dependencies and clean everything when done
-RUN apk --update --no-cache add nodejs make gcc g++ python && \
-    npm set progress=false && \
-    npm install --silent --production && \
-    apk del make gcc g++ python
+# Install Node.js
+RUN apk --update --no-cache add nodejs
 
 # Expose application port
 EXPOSE 8080
+
+# Copy only the minimal required files
+COPY package.json /code/
+
+######################################
+##### Dependencies partial build #####
+######################################
+
+# Dependencies image with alias
+FROM base as dependencies
+
+# Copy only the minimal required files
+COPY package-lock.json /code/
+
+# Update system, install dependencies, install npm production dependencies
+RUN apk --update --no-cache add --virtual build-dependencies make gcc g++ python && \
+    npm set progress=false && \
+    npm install --silent --production
 
 ###################################
 ###### Develop partial build ######
 ###################################
 
 # Develop image with alias
-FROM base as develop
+FROM dependencies as develop
 
 # Add environment vars for development mode
 ENV NODE_ENV=development
@@ -51,16 +63,14 @@ FROM base as release
 ENV NODE_ENV=production
 
 # Copy only required files to run the production application
+COPY --from=dependencies /code/node_modules /code/node_modules
 COPY --from=develop /code/build /code/build
 
-# Remove useless files
-RUN rm -rf /code/package-lock.json
-
 # Create dedicated user to not run the application as root (security best practice)
-RUN adduser -D -h /code -u 5000 ssense && \
-    chown -R ssense:ssense /code
+RUN adduser -D -h /code -u 5000 myuser && \
+    chown -R myuser:myuser /code
 
-USER ssense
+USER myuser
 
 # Define entrypoint
 ENTRYPOINT ["npm", "run"]

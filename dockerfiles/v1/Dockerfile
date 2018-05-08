@@ -19,10 +19,10 @@ RUN npm set progress=false && \
 RUN npm run build
 
 # Create dedicated user to not run the application as root (security best practice)
-RUN useradd -d /code -u 5000 ssense && \
-    chown -R ssense:ssense /code
+RUN useradd -d /code -u 5000 myuser && \
+    chown -R myuser:myuser /code
 
-USER ssense
+USER myuser
 
 # Expose application port
 EXPOSE 8080
