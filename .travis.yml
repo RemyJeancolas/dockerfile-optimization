@@ -1,0 +1,8 @@
+sudo: false
+
+services:
+  - docker
+
+script:
+  - docker build --target develop --file ./build-params/v5/Dockerfile --tag docker-optimization .;
+  - docker run -e TRAVIS=$TRAVIS -e TRAVIS_JOB_ID=$TRAVIS_JOB_ID docker-optimization /bin/sh -c "cd /code; npm run lint && npm run cover"
