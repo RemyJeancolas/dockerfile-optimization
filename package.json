@@ -21,7 +21,8 @@
     "start": "node ./build/index.js",
     "lint": "tslint -t verbose --project tsconfig-dev.json -c tslint.json ./src/{,**/}*.ts ./tests/{,**/}*.ts",
     "test": "mocha --require ts-node/register --project tsconfig-dev.json --bail --recursive ./tests/unit/{,**/}*.ts",
-    "cover": "nyc --report-dir tests/coverage/unit npm t"
+    "cover": "nyc --report-dir tests/coverage/unit npm t",
+    "coveralls": "cat tests/coverage/unit/lcov.info | ./node_modules/.bin/coveralls"
   },
   "author": {
     "name": "Rémy Jeancolas",
@@ -39,6 +40,7 @@
     "@types/restify": "^5.0.7",
     "@types/sinon": "^4.3.1",
     "chai": "^4.1.2",
+    "coveralls": "^3.0.1",
     "mocha": "^5.1.1",
     "nodemon": "^1.17.3",
     "nyc": "^11.7.1",
