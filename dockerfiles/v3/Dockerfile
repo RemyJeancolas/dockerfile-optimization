@@ -1,7 +1,7 @@
 # Base image
 FROM alpine:3.7
 
-# Update system and install dependencies
+# Update system and install dependencies (make gcc g++ and python are the equivalent for the build-essential package in the previous Dockerfile)
 RUN apk update && \
     apk add nodejs make gcc g++ python
 

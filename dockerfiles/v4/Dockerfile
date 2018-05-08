@@ -1,6 +1,6 @@
-##############################
-##### Base partial build #####
-##############################
+######################
+##### Base stage #####
+######################
 
 # Base image with alias
 FROM alpine:3.7 as base
@@ -20,9 +20,9 @@ RUN apk --update --no-cache add nodejs make gcc g++ python && \
 # Expose application port
 EXPOSE 8080
 
-###################################
-###### Develop partial build ######
-###################################
+###########################
+###### Develop stage ######
+###########################
 
 # Develop image with alias
 FROM base as develop
@@ -40,9 +40,9 @@ COPY ./ /code
 # Build application
 RUN npm run build
 
-#################################
-##### Release partial build #####
-#################################
+#########################
+##### Release stage #####
+#########################
 
 # Release image with alias
 FROM base as release

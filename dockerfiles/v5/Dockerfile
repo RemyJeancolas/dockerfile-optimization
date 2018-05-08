@@ -1,6 +1,6 @@
-##############################
-##### Base partial build #####
-##############################
+######################
+##### Base stage #####
+######################
 
 # Base image with alias
 FROM alpine:3.7 as base
@@ -17,9 +17,9 @@ EXPOSE 8080
 # Copy only the minimal required files
 COPY package.json /code/
 
-######################################
-##### Dependencies partial build #####
-######################################
+##############################
+##### Dependencies stage #####
+##############################
 
 # Dependencies image with alias
 FROM base as dependencies
@@ -32,9 +32,9 @@ RUN apk --update --no-cache add --virtual build-dependencies make gcc g++ python
     npm set progress=false && \
     npm install --silent --production
 
-###################################
-###### Develop partial build ######
-###################################
+###########################
+###### Develop stage ######
+###########################
 
 # Develop image with alias
 FROM dependencies as develop
@@ -52,9 +52,9 @@ COPY ./ /code
 # Build application
 RUN npm run build
 
-#################################
-##### Release partial build #####
-#################################
+#########################
+##### Release stage #####
+#########################
 
 # Release image with alias
 FROM base as release

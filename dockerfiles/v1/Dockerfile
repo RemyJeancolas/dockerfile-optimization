@@ -1,7 +1,7 @@
 # Base image
 FROM node:8
 
-# Update system and install dependencies
+# Update system and install dependencies (the build-essential package is required to install the newrelic npm module)
 RUN apt-get update && \
     apt-get install -y build-essential
 

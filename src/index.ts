@@ -1,5 +1,5 @@
 // Start New Relic plugin if needed
-if (process.env.NEW_RELIC_ENABLED === 'true' && process.env.NODE_ENV !== undefined && process.env.NODE_ENV.match(/test/) === null) {
+if (process.env.NEW_RELIC_ENABLED === 'true') {
     require('newrelic'); // tslint:disable-line:no-var-requires
 }
 
